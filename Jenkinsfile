@@ -9,10 +9,15 @@ pipeline {
     }
 
     stage('Test') {
-      steps {
-        sh 'chmod +x test.sh && ./test.sh'
-      }
-    }
+  steps {
+    sh '''
+      pwd
+      ls -l
+      chmod +x ./test.sh
+      ./test.sh
+    '''
+  }
+}
 
     stage('Build Docker Image') {
       steps {
