@@ -5,7 +5,6 @@ pipeline {
         IMAGE_NAME = "Dockerfile"
         CONTAINER_NAME = "Jenkinscontainer"
     }
-i
     stages {
 
         stage('Git Pull') {
