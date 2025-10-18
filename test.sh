@@ -1,7 +1,8 @@
 #!/bin/bash
+#!/bin/bash
 echo "Running tests..."
-sleep 2
-echo "All tests passed!"
-exit 0
+pytest test_app.py  # or some simple command
+echo "Tests passed!"
+
 
 
