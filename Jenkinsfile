@@ -5,7 +5,7 @@ pipeline {
         IMAGE_NAME = "Dockerfile"
         CONTAINER_NAME = "Jenkinscontainer"
     }
-
+i
     stages {
 
         stage('Git Pull') {
@@ -18,6 +18,8 @@ pipeline {
         stage('Run Tests') {
             steps {
                 echo "Running test script..."
+		sh 'chmod 755 test.sh'
+                sh 'ls -l test.sh'
                 sh './test.sh'
             }
         }
