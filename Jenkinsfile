@@ -2,11 +2,11 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = "Dockerfile"
-        CONTAINER_NAME = "Jenkinscontainer"
+        IMAGE_NAME = "myapp"             // Your app image name
+        CONTAINER_NAME = "myapp_container" // Container name for your app
     }
-    stages {
 
+    stages {
         stage('Git Pull') {
             steps {
                 echo "Pulling latest code from Git..."
@@ -17,7 +17,7 @@ pipeline {
         stage('Run Tests') {
             steps {
                 echo "Running test script..."
-		sh 'chmod 755 test.sh'
+                sh 'chmod +x test.sh'
                 sh 'ls -l test.sh'
                 sh './test.sh'
             }
@@ -26,7 +26,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 echo "Building Docker image..."
-                sh "docker build -t ${Dockerfile}:latest ."
+                sh "docker build -t ${IMAGE_NAME}:latest ."
             }
         }
 
@@ -34,9 +34,9 @@ pipeline {
             steps {
                 echo "Stopping old container if exists..."
                 sh """
-                if [ \$(docker ps -q -f name=${Jenkinscontainer}) ]; then
-                    docker stop ${Jenkinscontainer}
-                    docker rm ${Jenkinscontainer}
+                if [ \$(docker ps -q -f name=${CONTAINER_NAME}) ]; then
+                    docker stop ${CONTAINER_NAME}
+                    docker rm ${CONTAINER_NAME}
                 else
                     echo "No running container found."
                 fi
@@ -47,7 +47,7 @@ pipeline {
         stage('Run New Container') {
             steps {
                 echo "Running new container..."
-                sh "docker run -d --name ${Jenkinscontainer} -p 5000:5000 ${Dockerfile}:latest"
+                sh "docker run -d --name ${CONTAINER_NAME} -p 5000:5000 ${IMAGE_NAME}:latest"
             }
         }
     }
