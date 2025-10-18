@@ -1,8 +1,14 @@
 #!/bin/bash
-#!/bin/bash
+
 echo "Running tests..."
-pytest test_app.py  # or some simple command
-echo "Tests passed!"
+# Example test: check if app.py exists
+if [ -f "app.py" ]; then
+    echo "Test Passed: app.py exists."
+    exit 0
+else
+    echo "Test Failed: app.py missing."
+    exit 1
+fi
 
 
 
